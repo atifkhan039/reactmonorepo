@@ -9,7 +9,7 @@ permissions:
   contents: read
   pull-requests: read
 
-concurrenct:
+concurrency:
   group: pull-request-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
