@@ -1,4 +1,4 @@
-name:  Quality Gates
+name: Quality Gates
 
 on:
   workflow_call:
@@ -9,18 +9,18 @@ permissions:
 
 jobs:
   type-check:
-    name: Typescript
+    name: TypeScript
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Respository
-        user: action/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v5
 
       - name: Setup PNPM
-        user: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        user: action/setup-node@v5
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
@@ -28,7 +28,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run TyperScript
+      - name: Run TypeScript
         run: pnpm --filter customer-portal exec tsc --noEmit
 
   lint:
@@ -36,14 +36,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Respository
-        user: action/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v5
 
       - name: Setup PNPM
-        user: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        user: action/setup-node@v5
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
@@ -59,14 +59,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Respository
-        user: action/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v5
 
       - name: Setup PNPM
-        user: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        user: action/setup-node@v5
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
@@ -82,14 +82,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Respository
-        user: action/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v5
 
       - name: Setup PNPM
-        user: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        user: action/setup-node@v5
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
@@ -109,26 +109,26 @@ jobs:
           retention-days: 1
 
   sonarcloud:
-    name: Sonar Cloud Analysis
+    name: SonarCloud Analysis
     runs-on: ubuntu-latest
 
     needs:
       - type-check
       - lint
-      - unit-test
+      - unit-tests
       - build
-    
+
     steps:
-      - name: Checkout Respository
-        user: action/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Setup PNPM
-        user: pnpm/action-setuo@v5
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        user: action/setup-node@v5
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
@@ -142,5 +142,4 @@ jobs:
       - name: Run SonarCloud Analysis
         uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN  }}
-      
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
