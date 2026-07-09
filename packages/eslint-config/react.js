@@ -6,9 +6,16 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 
 export const reactConfig = [
   {
-    ignores: ['dist', 'coverage', '*.config.js', '*.config.cjs', '*config.mjs'],
+    ignores: [
+      'dist',
+      'coverage',
+      '*.config.js',
+      '*.config.cjs',
+      '*.config.mjs',
+    ],
   },
-  js.config.recommended,
+
+  js.configs.recommended,
 
   ...tseslint.configs.recommended,
 
